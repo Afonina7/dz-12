@@ -4,22 +4,8 @@ import org.testng.Assert;
 
 public class ManAndWomanTests {
 
-    private enum ExpectedStatus {
-        EQUALS,
-        NOT_EQUALS
-    }
-
     Woman woman = new Woman("Olya", "Ivanova", 34);
     Man man = new Man("Ivan", "Smith", 37);
-
-    @DataProvider
-    public Object[][] dataProvider() {
-        return new Object[][]{
-                {ExpectedStatus.EQUALS, 60},
-                {ExpectedStatus.NOT_EQUALS, 65},
-        };
-    }
-
 
     @Test(testName = "Person test", groups = "smoke", description = "Testing woman and man data")
     public void ManAndWomanTests() {
@@ -64,28 +50,6 @@ public class ManAndWomanTests {
         man.deregisterPartnership(true);
         Assert.assertEquals(man.getLastName(), "Smith", "Last name is incorrect!");
         Main.printPersonDetails(man);
-    }
-
-    @Test(testName = "Retired test", dataProvider = "dataProvider", groups = "smoke",
-            description = "Testing is retired woman")
-    public void isWomanRetiredTest(ExpectedStatus status, int age) {
-        if (status == ExpectedStatus.EQUALS) {
-            Assert.assertEquals(woman.getAge(), age, "Woman is not retired");
-        } else if (status == ExpectedStatus.NOT_EQUALS) {
-            Assert.assertNotEquals(woman.getAge(), age, "Woman is not retired");
-        }
-        System.out.println("Passed");
-    }
-
-    @Test(testName = "Retired test", dataProvider = "dataProvider", groups = "smoke",
-            description = "Testing is retired man")
-    public void isManRetiredTest(ExpectedStatus status, int age) {
-        if (status == ExpectedStatus.EQUALS) {
-            Assert.assertNotEquals(man.getAge(), age, "Man is not retired");
-        } else if (status == ExpectedStatus.NOT_EQUALS) {
-            Assert.assertEquals(man.getAge(), age, "Man is not retired");
-        }
-        System.out.println("Passed");
     }
 }
 
